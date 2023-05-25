@@ -208,4 +208,4 @@ def search_by_name_hall_of_fame_member(player_list : list[dict]) -> bool:
             print_data("ERROR: Caracteres incorrectos")    
     return function_return
 
-search_by_name_hall_of_fame_member(lista_jugadores_original)
+#search_by_name_hall_of_fame_member(lista_jugadores_original)
