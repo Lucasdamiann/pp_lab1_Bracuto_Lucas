@@ -164,9 +164,7 @@ def order_alphabetically_by_name(players_list : list[dict]) -> list:
     Param: Una lista de jugadores
     Return: Una lista de jugadores ordenada alfabeticamente'''
     if len(players_list) != 0:
-        return order_by_alphabetic_string(players_list,"nombre",True)
-
-
+        return order_by_alphabetic_string(players_list,"nombre",True) 
 
 def show_player_w_promedy_of_points_per_game(players_list : list[dict]) -> bool:
     '''Muestra los jugadores con sus promedios de puntos por partido
@@ -181,6 +179,33 @@ def show_player_w_promedy_of_points_per_game(players_list : list[dict]) -> bool:
             string_player = string_format.format(player["nombre"],player["posicion"],"Promedio puntos por partido",player["estadisticas"]["promedio_puntos_por_partido"]) 
             print_data(string_player)
 
-lista_ordenada = order_alphabetically_by_name(lista_jugadores_original)
+#lista_ordenada = order_alphabetically_by_name(lista_jugadores_original)
 
-show_player_w_promedy_of_points_per_game(lista_ordenada)
+#show_player_w_promedy_of_points_per_game(lista_ordenada)
+
+###6
+
+def search_by_name_hall_of_fame_member(player_list : list[dict]) -> bool:
+    '''Busca un jugador por nombre y muestra sus logros
+    Param: Una lista de jugadores
+    Return: True si sale todo bien, False si no'''
+    function_return = False
+    if len(player_list) != 0:
+        chosen_name = input("Ingrese el nombre de un jugador: ")
+        if re.search(r"^[a-zA-Z ]+$",chosen_name):
+            capitalized_name = capitalize_full_name(chosen_name)
+            hall_of_fame_string = "Miembro del Salon de la Fama del Baloncesto" 
+            for player in player_list:
+                if re.match(capitalized_name,player["nombre"]):                                       
+                    if hall_of_fame_string in player["logros"]:
+                        string_format = "\n=============================================\n{0:33}| {1}\n=============================================\n{2}\n=============================================\n"
+                        print_data(string_format.format(player["nombre"],player["posicion"],hall_of_fame_string))
+                        function_return = True         
+                        break                   
+            if not function_return:        
+                print_data("ERROR: No es Miembro del Salon de la Fama del Baloncesto")                    
+        else:
+            print_data("ERROR: Caracteres incorrectos")    
+    return function_return
+
+search_by_name_hall_of_fame_member(lista_jugadores_original)
