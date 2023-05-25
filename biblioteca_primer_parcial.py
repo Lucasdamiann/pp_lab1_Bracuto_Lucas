@@ -14,7 +14,7 @@ lista_jugadores_original = read_file("Repo_Github\pp_lab1_Bracuto_Lucas\dt.json"
 def save_file(file_name_to_save : str,string_to_save : str) -> bool:
     '''Crea un archivo y guarda en él la informacion recibida por parametro
     Param: Un string con el nombre del archivo a guardar, Un string con la data a guardar
-    Return: Un booleano'''
+    Return: True si sale todo bien, False si no'''
     function_return = False
     with open(file_name_to_save, 'w+') as file_object:
         if file_object.write (string_to_save):
@@ -70,7 +70,7 @@ def show_player_statistics_by_index(player_list : list[dict]) -> list:
     else:
         print_data("ERROR: Lista vacia")
     return new_list
-jugador = show_player_statistics_by_index(lista_jugadores_original)
+#jugador = show_player_statistics_by_index(lista_jugadores_original)
 
 ##3
 
@@ -104,7 +104,7 @@ def capitalize_full_name(name : str) -> str:
 def search_by_name(player_list : list[dict]) -> bool:
     '''Busca un jugador por nombre y muestra sus logros
     Param: Una lista de jugadores
-    Return: None'''
+    Return: True si sale todo bien, False si no'''
     function_return = False
     if len(player_list) != 0:
         chosen_name = input("Ingrese el nombre de un jugador: ")
@@ -115,19 +115,72 @@ def search_by_name(player_list : list[dict]) -> bool:
                     string_achievement = "\n".join(player["logros"])
                     function_return = True
                     string_format = "\n=============================================\n{0:33}| {1}\n=============================================\n{2}\n=============================================\n"
-                    print_data(string_format.format(player["nombre"],player["posicion"],string_achievement))
-                    
+                    print_data(string_format.format(player["nombre"],player["posicion"],string_achievement))                    
                     break
             if not function_return:        
                 print_data("ERROR: Nombre inexistente")                    
         else:
-            print_data("ERROR: Caracteres incorrectos")
-    
+            print_data("ERROR: Caracteres incorrectos")    
     return function_return
 
-search_by_name(lista_jugadores_original)
+#search_by_name(lista_jugadores_original)
+
+###5
+
+def calculate_promedy_of_points_per_game(players_list :list[dict]) -> float:
+    '''Calcula el promedo de puntos por partido de todo el equipo
+    Param: Una lista de jugadores
+    Return: El resultado del promedio como float'''
+    acumulator = 0
+    counter = 0
+    if len(players_list) != 0:
+        for player in players_list:
+            if "promedio_puntos_por_partido" in player["estadisticas"]:
+                acumulator += player["estadisticas"]["promedio_puntos_por_partido"]
+                counter += 1
+    return round(acumulator/counter,2)
+
+
+def order_by_alphabetic_string(a_list : list[dict], a_key : str , order : bool = True) -> list[dict]:
+    '''Ordena la lista por determinada key con valor string de manera descendente por defecto
+    Param: Una lista de diccionarios, un string de key, un string de orden que por defecto es False
+    Return: Una lista de diccionarios ordenada'''
+    a_list_copy = a_list.copy()
+    range_of_list = len(a_list_copy)
+    flag_swap = True
+    while flag_swap:
+        flag_swap = False
+        range_of_list = range_of_list-1
+        for index in range(range_of_list):
+            if (a_list_copy[index][a_key] > a_list_copy[index+1][a_key] and order == True)\
+                  | (a_list_copy[index][a_key] < a_list_copy[index+1][a_key] and order == False):
+                buffer = a_list_copy[index]
+                a_list_copy[index],a_list_copy[index+1] = a_list_copy[index+1],buffer 
+                flag_swap = True
+    return a_list_copy
+
+def order_alphabetically_by_name(players_list : list[dict]) -> list:
+    '''Ordena alfabeticamente por nombre una lista de jugadores
+    Param: Una lista de jugadores
+    Return: Una lista de jugadores ordenada alfabeticamente'''
+    if len(players_list) != 0:
+        return order_by_alphabetic_string(players_list,"nombre",True)
 
 
 
+def show_player_w_promedy_of_points_per_game(players_list : list[dict]) -> bool:
+    '''Muestra los jugadores con sus promedios de puntos por partido
+    Param: Una lista de jugadores
+    Return: True si sale todo bien, False si no'''
+    string_player = ""
+    if len(players_list) != 0:
+        promedy = calculate_promedy_of_points_per_game(players_list)
+        print_data("\n=============================================\n{0:33}| {1}\n=============================================\n".format("Promedio de puntos por partido DT", promedy))
+        for player in players_list:          
+            string_format = "\n=============================================\n{0:33}| {1}\n=============================================\n{2:33}| {3}"
+            string_player = string_format.format(player["nombre"],player["posicion"],"Promedio puntos por partido",player["estadisticas"]["promedio_puntos_por_partido"]) 
+            print_data(string_player)
 
+lista_ordenada = order_alphabetically_by_name(lista_jugadores_original)
 
+show_player_w_promedy_of_points_per_game(lista_ordenada)
