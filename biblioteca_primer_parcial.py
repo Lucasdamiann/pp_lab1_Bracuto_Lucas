@@ -11,6 +11,19 @@ def read_file(path_file: str) -> list:
     
 lista_jugadores_original = read_file("Repo_Github\pp_lab1_Bracuto_Lucas\dt.json")
 
+def save_file(file_name_to_save : str,string_to_save : str) -> bool:
+    '''Crea un archivo y guarda en él la informacion recibida por parametro
+    Param: Un string con el nombre del archivo a guardar, Un string con la data a guardar
+    Return: Un booleano'''
+    function_return = False
+    with open(file_name_to_save, 'w+') as file_object:
+        if file_object.write (string_to_save):
+            print_data("Se creó el archivo: {}".format(file_name_to_save))
+            function_return = True        
+        else:
+            print_data("Error al crear el archivo: {}".format(file_name_to_save))            
+    return function_return  
+
 def print_data(string_received : str) -> None:
     '''Imprime el string recibido por parametro
     Param: Un string cualquiera
@@ -36,10 +49,10 @@ def show_dt_players(players_list : list) -> None:
 
 ###2
 
-def show_player_statistics_by_index(player_list : list) ->None:
+def show_player_statistics_by_index(player_list : list) -> list:
     '''Selecciona un jugador por indice y lo muestra con todas sus caracteristicas
-    param: una lista de jugadores
-    return: none'''
+    Param: una lista de jugadores
+    Return: una lista con el jugador ingresado por indice'''
     string_player = ""
     new_list = []
     if len(player_list) != 0:
@@ -56,5 +69,21 @@ def show_player_statistics_by_index(player_list : list) ->None:
             print_data("ERROR: Opcion invalida")
     else:
         print_data("ERROR: Lista vacia")
+    return new_list
+jugador = show_player_statistics_by_index(lista_jugadores_original)
 
-show_player_statistics_by_index(lista_jugadores_original)
+##3
+
+def save_player_in_csv(player_list : list[dict]) -> bool:
+    '''Guarda en un archivo csv un jugador recibido como lista
+    Param: Una lista con un jugador
+    Return: True si sale todo bien, False si no'''
+    function_return = False
+    string_player = ""
+    if len(player_list) != 0:
+        string_player = "{0},{1}".format(player_list[0]["nombre"],player_list[0]["posicion"])
+        for value in player_list[0]["estadisticas"].values():
+            string_player += ",{0}".format(value)
+    save_file("{0}_w_statistics.csv".format(player_list[0]["nombre"]).replace(" ","_"),string_player)
+
+save_player_in_csv(jugador)
