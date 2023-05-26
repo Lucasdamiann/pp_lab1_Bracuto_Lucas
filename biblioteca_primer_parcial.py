@@ -237,15 +237,35 @@ def show_player_received(player_list : list[dict], statistic : str) -> None:
     print_data(string_format.format(player_list[0]["nombre"],player_list[0]["posicion"],statistic.replace("_"," ").capitalize(),player_list[0]["estadisticas"][statistic]))
 
 
-diccionario = calculate_player_w_most_quantity_of_selected_statistic(lista_jugadores_original,"rebotes_totales")
-show_player_received(diccionario,"rebotes_totales")
+#diccionario = calculate_player_w_most_quantity_of_selected_statistic(lista_jugadores_original,"rebotes_totales")
+#show_player_received(diccionario,"rebotes_totales")
 
 ###8
 
-diccionario = calculate_player_w_most_quantity_of_selected_statistic(lista_jugadores_original,"porcentaje_tiros_de_campo")
-show_player_received(diccionario,"porcentaje_tiros_de_campo")
+#diccionario = calculate_player_w_most_quantity_of_selected_statistic(lista_jugadores_original,"porcentaje_tiros_de_campo")
+#show_player_received(diccionario,"porcentaje_tiros_de_campo")
 
 ###9
 
-diccionario = calculate_player_w_most_quantity_of_selected_statistic(lista_jugadores_original,"asistencias_totales")
-show_player_received(diccionario,"asistencias_totales")
+#diccionario = calculate_player_w_most_quantity_of_selected_statistic(lista_jugadores_original,"asistencias_totales")
+#show_player_received(diccionario,"asistencias_totales")
+
+###10
+
+def show_players_w_more_quantity_of_selected_statistic(players_list : list[dict], statistic : str) -> None:
+    '''Muetra los jugadores que tengan una cantidad superior al numero ingresado de una determinada caracteristica
+    Param: Una lista de jugadores, un string con el nombre de una estadistica
+    Return: None'''
+    new_list = []
+    string_player = ""
+    if len(players_list) != 0:
+        ingressed_value = input("Mostrar jugador/es cuyo numero de [{0}] sea mayor a: ".format(statistic.replace("_"," ")))
+        for player in players_list:
+            if re.match(r"^[0-9]+.{1}[0-9]+$|^[0-9]+",ingressed_value) and player["estadisticas"][statistic] > float(ingressed_value):
+                new_list.append(player)
+                string_format = "\n=============================================\n{0:33}| {1}\n=============================================\n{2:33}| {3}\n=============================================\n"
+                string_player += string_format.format(player["nombre"],player["posicion"],statistic.replace("_"," ").capitalize(),player["estadisticas"][statistic])
+        print_data(string_player)
+
+show_players_w_more_quantity_of_selected_statistic(lista_jugadores_original ,"promedio_puntos_por_partido")
+
