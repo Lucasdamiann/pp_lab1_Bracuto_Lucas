@@ -159,12 +159,12 @@ def order_by_alphabetic_string(players_list : list[dict], players_key : str , or
                 flag_swap = True
     return players_list_copy
 
-def order_alphabetically_by_name(players_list : list[dict]) -> list:
+def order_alphabetically_by_key(players_list : list[dict], player_key :str) -> list:
     '''Ordena alfabeticamente por nombre una lista de jugadores
     Param: Una lista de jugadores
     Return: Una lista de jugadores ordenada alfabeticamente'''
     if len(players_list) != 0:
-        return order_by_alphabetic_string(players_list,"nombre",True) 
+        return order_by_alphabetic_string(players_list,player_key,True) 
 
 def show_player_w_promedy_of_points_per_game(players_list : list[dict]) -> bool:
     '''Muestra los jugadores con sus promedios de puntos por partido
@@ -179,7 +179,7 @@ def show_player_w_promedy_of_points_per_game(players_list : list[dict]) -> bool:
             string_player = string_format.format(player["nombre"],player["posicion"],"Promedio puntos por partido",player["estadisticas"]["promedio_puntos_por_partido"]) 
             print_data(string_player)
 
-#lista_ordenada = order_alphabetically_by_name(lista_jugadores_original)
+#lista_ordenada = order_alphabetically_by_key(lista_jugadores_original,"nombre")
 
 #show_player_w_promedy_of_points_per_game(lista_ordenada)
 
@@ -349,4 +349,8 @@ def show_player_received_w_achievement(players_list : list[dict]) -> None:
 
 ###19
 
-show_players_w_more_quantity_of_selected_statistic(lista_jugadores_original ,"temporadas")
+#show_players_w_more_quantity_of_selected_statistic(lista_jugadores_original ,"temporadas")
+
+###20
+
+show_players_w_more_quantity_of_selected_statistic(order_alphabetically_by_key(lista_jugadores_original,"posicion") ,"porcentaje_tiros_de_campo")
