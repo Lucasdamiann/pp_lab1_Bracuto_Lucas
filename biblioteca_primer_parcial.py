@@ -49,22 +49,22 @@ def show_dt_players(players_list : list[dict]) -> None:
 
 ###2
 
-def show_player_statistics_by_index(player_list : list[dict]) -> list[dict]:
+def show_player_statistics_by_index(players_list : list[dict]) -> list[dict]:
     '''Selecciona un jugador por indice y lo muestra con todas sus caracteristicas
     Param: una lista de jugadores
     Return: una lista con el jugador ingresado por indice'''
     string_player = ""
     new_list = []
-    if len(player_list) != 0:
-        show_dt_players(player_list)
+    if len(players_list) != 0:
+        show_dt_players(players_list)
         index_chosen = input("=Ingrese el indice del jugador a mostrar: ")
-        if re.match("^[0-9]{1,2}$",index_chosen) and int(index_chosen) <= len(player_list) and int(index_chosen) >= 0:
-            new_list.append(player_list[int(index_chosen)])
-            for statistics in player_list[int(index_chosen)]["estadisticas"]:  
+        if re.match("^[0-9]{1,2}$",index_chosen) and int(index_chosen) <= len(players_list) and int(index_chosen) >= 0:
+            new_list.append(players_list[int(index_chosen)])
+            for statistics in players_list[int(index_chosen)]["estadisticas"]:  
                 string_format = "{0:33}| {1}\n=============================================\n"             
-                string_player += string_format.format(statistics.capitalize().replace("_"," "),player_list[int(index_chosen)]["estadisticas"][statistics])
+                string_player += string_format.format(statistics.capitalize().replace("_"," "),players_list[int(index_chosen)]["estadisticas"][statistics])
             
-            print_data("\n=============================================\n{3:2} - {0:28}| {1}\n=============================================\n{2}".format(player_list[int(index_chosen)]["nombre"],player_list[int(index_chosen)]["posicion"],string_player,int(index_chosen)))
+            print_data("\n=============================================\n{3:2} - {0:28}| {1}\n=============================================\n{2}".format(players_list[int(index_chosen)]["nombre"],players_list[int(index_chosen)]["posicion"],string_player,int(index_chosen)))
         else:
             print_data("ERROR: Opcion invalida")
     else:
@@ -74,17 +74,17 @@ def show_player_statistics_by_index(player_list : list[dict]) -> list[dict]:
 
 ##3
 
-def save_player_in_csv(player_list : list[dict]) -> bool:
+def save_player_in_csv(players_list : list[dict]) -> bool:
     '''Guarda en un archivo csv un jugador recibido como lista
     Param: Una lista con un jugador
     Return: True si sale todo bien, False si no'''
     function_return = False
     string_player = ""
-    if len(player_list) != 0:
-        string_player = "{0},{1}".format(player_list[0]["nombre"],player_list[0]["posicion"])
-        for value in player_list[0]["estadisticas"].values():
+    if len(players_list) != 0:
+        string_player = "{0},{1}".format(players_list[0]["nombre"],players_list[0]["posicion"])
+        for value in players_list[0]["estadisticas"].values():
             string_player += ",{0}".format(value)
-    if save_file("{0}_w_statistics.csv".format(player_list[0]["nombre"]).replace(" ","_"),string_player):
+    if save_file("{0}_w_statistics.csv".format(players_list[0]["nombre"]).replace(" ","_"),string_player):
         function_return = True
     return function_return    
 
@@ -101,16 +101,16 @@ def capitalize_full_name(name : str) -> str:
         capitalized_string += "{0} ".format(string).capitalize()
     return  capitalized_string.strip()
 
-def search_by_name_and_show_achievement(player_list : list[dict]) -> bool:
+def search_by_name_and_show_achievement(players_list : list[dict]) -> bool:
     '''Busca un jugador por nombre y muestra sus logros
     Param: Una lista de jugadores
     Return: True si sale todo bien, False si no'''
     function_return = False
-    if len(player_list) != 0:
+    if len(players_list) != 0:
         chosen_name = input("Ingrese el nombre de un jugador: ")
         if re.search(r"^[a-zA-Z ]+$",chosen_name):
             capitalized_name = capitalize_full_name(chosen_name)
-            for player in player_list:
+            for player in players_list:
                 if re.match(capitalized_name,player["nombre"]):
                     string_achievement = "\n".join(player["logros"])
                     function_return = True
@@ -141,23 +141,23 @@ def calculate_promedy_of_points_per_game(players_list :list[dict]) -> float:
     return round(acumulator/counter,2)
 
 
-def order_by_alphabetic_string(a_list : list[dict], a_key : str , order : bool = True) -> list[dict]:
+def order_by_alphabetic_string(players_list : list[dict], players_key : str , order : bool = True) -> list[dict]:
     '''Ordena la lista por determinada key con valor string de manera descendente por defecto
     Param: Una lista de diccionarios, un string de key, un string de orden que por defecto es False
     Return: Una lista de diccionarios ordenada'''
-    a_list_copy = a_list.copy()
-    range_of_list = len(a_list_copy)
+    players_list_copy = players_list.copy()
+    range_of_list = len(players_list_copy)
     flag_swap = True
     while flag_swap:
         flag_swap = False
         range_of_list = range_of_list-1
         for index in range(range_of_list):
-            if (a_list_copy[index][a_key] > a_list_copy[index+1][a_key] and order == True)\
-                  | (a_list_copy[index][a_key] < a_list_copy[index+1][a_key] and order == False):
-                buffer = a_list_copy[index]
-                a_list_copy[index],a_list_copy[index+1] = a_list_copy[index+1],buffer 
+            if (players_list_copy[index][players_key] > players_list_copy[index+1][players_key] and order == True)\
+                  | (players_list_copy[index][players_key] < players_list_copy[index+1][players_key] and order == False):
+                buffer = players_list_copy[index]
+                players_list_copy[index],players_list_copy[index+1] = players_list_copy[index+1],buffer 
                 flag_swap = True
-    return a_list_copy
+    return players_list_copy
 
 def order_alphabetically_by_name(players_list : list[dict]) -> list:
     '''Ordena alfabeticamente por nombre una lista de jugadores
@@ -185,17 +185,17 @@ def show_player_w_promedy_of_points_per_game(players_list : list[dict]) -> bool:
 
 ###6
 
-def search_by_name_hall_of_fame_member(player_list : list[dict]) -> bool:
+def search_by_name_hall_of_fame_member(players_list : list[dict]) -> bool:
     '''Busca un jugador por nombre y muestra sus logros
     Param: Una lista de jugadores
     Return: True si sale todo bien, False si no'''
     function_return = False
-    if len(player_list) != 0:
+    if len(players_list) != 0:
         chosen_name = input("Ingrese el nombre de un jugador: ")
         if re.search(r"^[a-zA-Z ]+$",chosen_name):
             capitalized_name = capitalize_full_name(chosen_name)
             hall_of_fame_string = "Miembro del Salon de la Fama del Baloncesto" 
-            for player in player_list:
+            for player in players_list:
                 if re.match(capitalized_name,player["nombre"]):                                       
                     if hall_of_fame_string in player["logros"]:
                         string_format = "\n=============================================\n{0:33}| {1}\n=============================================\n{2}\n=============================================\n"
@@ -212,29 +212,29 @@ def search_by_name_hall_of_fame_member(player_list : list[dict]) -> bool:
 
 ###7
 
-def calculate_player_w_most_quantity_of_selected_statistic(player_list : list[dict], statistic : str) -> list[dict]:
+def calculate_player_w_most_quantity_of_selected_statistic(players_list : list[dict], statistic : str) -> list[dict]:
     '''Calcula el jugador con la mayor cantidad de la estadistica elegida
     Param: Una lista de jugadores, un string con el nombre de una estadistica
     Return: Una lista con el jugador que cumple el requisito'''
     function_return = "ERROR"
     new_list = []
-    if len(player_list) != 0:
-        higher_statistic = player_list[0]["estadisticas"][statistic]
-        for index in range(len(player_list)):
-            if player_list[index]["estadisticas"][statistic] > higher_statistic :
-                higher_statistic = player_list[index]["estadisticas"][statistic]
-                higher_player = player_list[index]
+    if len(players_list) != 0:
+        higher_statistic = players_list[0]["estadisticas"][statistic]
+        for index in range(len(players_list)):
+            if players_list[index]["estadisticas"][statistic] > higher_statistic :
+                higher_statistic = players_list[index]["estadisticas"][statistic]
+                higher_player = players_list[index]
         new_list.append(higher_player)
         function_return = new_list
     return function_return                    
 
 
-def show_player_received(player_list : list[dict], statistic : str) -> None:
+def show_player_received(players_list : list[dict], statistic : str) -> None:
     '''Muestra un jugador con su estadistica elegida
     Para: Un diccionario de un jugador
     Return: None'''
     string_format = "\n=============================================\n{0:33}| {1}\n=============================================\n{2:33}| {3}\n=============================================\n"
-    print_data(string_format.format(player_list[0]["nombre"],player_list[0]["posicion"],statistic.replace("_"," ").capitalize(),player_list[0]["estadisticas"][statistic]))
+    print_data(string_format.format(players_list[0]["nombre"],players_list[0]["posicion"],statistic.replace("_"," ").capitalize(),players_list[0]["estadisticas"][statistic]))
 
 
 #diccionario = calculate_player_w_most_quantity_of_selected_statistic(lista_jugadores_original,"rebotes_totales")
@@ -253,7 +253,7 @@ def show_player_received(player_list : list[dict], statistic : str) -> None:
 ###10
 
 def show_players_w_more_quantity_of_selected_statistic(players_list : list[dict], statistic : str) -> None:
-    '''Muetra los jugadores que tengan una cantidad superior al numero ingresado de una determinada caracteristica
+    '''Muestra los jugadores que tengan una cantidad superior al numero ingresado de una determinada caracteristica
     Param: Una lista de jugadores, un string con el nombre de una estadistica
     Return: None'''
     new_list = []
@@ -289,4 +289,22 @@ def show_players_w_more_quantity_of_selected_statistic(players_list : list[dict]
 
 ###15
 
-show_players_w_more_quantity_of_selected_statistic(lista_jugadores_original ,"porcentaje_tiros_libres")
+#show_players_w_more_quantity_of_selected_statistic(lista_jugadores_original ,"porcentaje_tiros_libres")
+
+###16
+
+def exclude_the_worst_scorer(players_list : list[dict]) -> list[dict]:
+    '''Crea una lista filtrando al jugador con menos cantidad de puntos por partido
+    Param: Una lista de jugadores
+    Return: Una lista de jugadores sin el jugador con menos cantidad de puntos por partido'''
+    players_list_copy = players_list.copy()
+    if len(players_list) != 0:
+        lower_statistic = players_list[0]["estadisticas"]["promedio_puntos_por_partido"]
+        for index in range(len(players_list)):
+            if players_list[index]["estadisticas"]["promedio_puntos_por_partido"] < lower_statistic :
+                lower_statistic = players_list[index]["estadisticas"]["promedio_puntos_por_partido"]
+                lower_player = players_list[index]    
+        players_list_copy.remove(lower_player)    
+    return players_list_copy
+
+show_player_w_promedy_of_points_per_game(exclude_the_worst_scorer(lista_jugadores_original))
