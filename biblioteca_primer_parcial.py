@@ -345,4 +345,8 @@ def show_player_received_w_achievement(players_list : list[dict]) -> None:
 
 ###18
 
-show_players_w_more_quantity_of_selected_statistic(lista_jugadores_original ,"porcentaje_tiros_triples")
+#show_players_w_more_quantity_of_selected_statistic(lista_jugadores_original ,"porcentaje_tiros_triples")
+
+###19
+
+show_players_w_more_quantity_of_selected_statistic(lista_jugadores_original ,"temporadas")
