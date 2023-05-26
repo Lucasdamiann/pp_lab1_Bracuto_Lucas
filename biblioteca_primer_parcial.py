@@ -275,4 +275,9 @@ def show_players_w_more_quantity_of_selected_statistic(players_list : list[dict]
 
 ###12
 
-show_players_w_more_quantity_of_selected_statistic(lista_jugadores_original ,"promedio_asistencias_por_partido")
+#show_players_w_more_quantity_of_selected_statistic(lista_jugadores_original ,"promedio_asistencias_por_partido")
+
+###13
+
+diccionario = calculate_player_w_most_quantity_of_selected_statistic(lista_jugadores_original,"robos_totales")
+show_player_received(diccionario,"robos_totales")
