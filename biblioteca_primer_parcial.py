@@ -284,5 +284,9 @@ def show_players_w_more_quantity_of_selected_statistic(players_list : list[dict]
 
 ###14
 
-diccionario = calculate_player_w_most_quantity_of_selected_statistic(lista_jugadores_original,"bloqueos_totales")
-show_player_received(diccionario,"bloqueos_totales")
+#diccionario = calculate_player_w_most_quantity_of_selected_statistic(lista_jugadores_original,"bloqueos_totales")
+#show_player_received(diccionario,"bloqueos_totales")
+
+###15
+
+show_players_w_more_quantity_of_selected_statistic(lista_jugadores_original ,"porcentaje_tiros_libres")
