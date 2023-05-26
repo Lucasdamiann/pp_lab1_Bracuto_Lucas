@@ -279,5 +279,10 @@ def show_players_w_more_quantity_of_selected_statistic(players_list : list[dict]
 
 ###13
 
-diccionario = calculate_player_w_most_quantity_of_selected_statistic(lista_jugadores_original,"robos_totales")
-show_player_received(diccionario,"robos_totales")
+#diccionario = calculate_player_w_most_quantity_of_selected_statistic(lista_jugadores_original,"robos_totales")
+#show_player_received(diccionario,"robos_totales")
+
+###14
+
+diccionario = calculate_player_w_most_quantity_of_selected_statistic(lista_jugadores_original,"bloqueos_totales")
+show_player_received(diccionario,"bloqueos_totales")
