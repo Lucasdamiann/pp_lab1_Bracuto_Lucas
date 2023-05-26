@@ -229,7 +229,7 @@ def calculate_player_w_most_quantity_of_selected_statistic(players_list : list[d
     return function_return                    
 
 
-def show_player_received(players_list : list[dict], statistic : str) -> None:
+def show_player_received_w_statistic(players_list : list[dict], statistic : str) -> None:
     '''Muestra un jugador con su estadistica elegida
     Para: Un diccionario de un jugador
     Return: None'''
@@ -307,4 +307,38 @@ def exclude_the_worst_scorer(players_list : list[dict]) -> list[dict]:
         players_list_copy.remove(lower_player)    
     return players_list_copy
 
-show_player_w_promedy_of_points_per_game(exclude_the_worst_scorer(lista_jugadores_original))
+#show_player_w_promedy_of_points_per_game(exclude_the_worst_scorer(lista_jugadores_original))
+
+###17
+
+def calculate_player_w_most_quantity_of_achievements(players_list : list[dict]) -> list[dict]:
+    '''Calcula el jugador con la mayor cantidad de logros
+    Param: Una lista de jugadores
+    Return: Una lista con el jugador que cumple el requisito'''
+    function_return = "ERROR"
+    new_list = []
+    if len(players_list) != 0:
+        higher_statistic = players_list[0]["logros"]
+        higher_player = players_list[0]
+        for index in range(len(players_list)):
+            if len(players_list[index]["logros"]) > len(higher_statistic) :
+                higher_statistic = players_list[index]["logros"]
+                higher_player = players_list[index]
+        new_list.append(higher_player)
+        function_return = new_list
+    return function_return                    
+
+
+def show_player_received_w_achievement(players_list : list[dict]) -> None:
+    '''Muestra un jugador con su estadistica elegida
+    Para: Un diccionario de un jugador
+    Return: None'''
+    string_format = "\n=============================================\n{0:33}| {1}\n=============================================\n"
+    string_name_position = string_format.format(players_list[0]["nombre"],players_list[0]["posicion"])
+    print_data(string_name_position)
+    for achievement in players_list[0]["logros"]:
+        string_player = "{0}\n=============================================".format(achievement)
+        print_data(string_player)
+
+
+show_player_received_w_achievement(calculate_player_w_most_quantity_of_achievements(lista_jugadores_original))
