@@ -485,6 +485,7 @@ def ranking(players_list : list[dict]) -> None:
     Param: Una lista de jugadores
     Return: None'''
     string_players = ""
+    string_players_csv = ""
     if len(players_list) != 0:
         points_list = sort_by_statistics(players_list,"puntos_totales")
         rebounces_list = sort_by_statistics(players_list,"rebotes_totales")
@@ -495,4 +496,18 @@ def ranking(players_list : list[dict]) -> None:
         for player in players_list:
             string_format = "\n=================================================\n{0:15}|{1:3}   |{2:4}   |{3:6}     |{4:3} \n=================================================\n"
             string_players += string_format.format(player["nombre"],points_list.index(player),rebounces_list.index(player),assists_list.index(player),robberies_list.index(player))
+            string_players_csv += "{0},{1},{2},{3},{4}\n".format(player["nombre"],points_list.index(player),rebounces_list.index(player),assists_list.index(player),robberies_list.index(player))
+            save_ranking_in_csv("ranking.csv",string_players_csv)
     print(string_players)
+
+
+def save_ranking_in_csv(file_name : str, data_file : str ) -> bool:
+    '''crea un archivo csv y guarda los datos pasados por parametro
+    param: una ruta completa para el archivo, la data a guardar
+    return: true si sale todo bien, false si no'''
+    function_return = False
+    with open(file_name, "w") as file_object: 
+        if file_object.write(data_file):
+            function_return = True
+    return function_return
+        
