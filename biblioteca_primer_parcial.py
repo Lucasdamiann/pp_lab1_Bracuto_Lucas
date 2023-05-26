@@ -2,7 +2,7 @@ import json
 import re
 
 
-def read_file(path_file: str) -> list:
+def read_file(path_file: str) -> list[dict]:
     '''Levanta un archivo en formato json y lo devuelve como lista diccionario
     Param: La ruta del archivo
     Return: Una lista de diccioarios'''
@@ -49,7 +49,7 @@ def show_dt_players(players_list : list[dict]) -> None:
 
 ###2
 
-def show_player_statistics_by_index(player_list : list[dict]) -> list:
+def show_player_statistics_by_index(player_list : list[dict]) -> list[dict]:
     '''Selecciona un jugador por indice y lo muestra con todas sus caracteristicas
     Param: una lista de jugadores
     Return: una lista con el jugador ingresado por indice'''
@@ -101,7 +101,7 @@ def capitalize_full_name(name : str) -> str:
         capitalized_string += "{0} ".format(string).capitalize()
     return  capitalized_string.strip()
 
-def search_by_name(player_list : list[dict]) -> bool:
+def search_by_name_and_show_achievement(player_list : list[dict]) -> bool:
     '''Busca un jugador por nombre y muestra sus logros
     Param: Una lista de jugadores
     Return: True si sale todo bien, False si no'''
@@ -123,7 +123,7 @@ def search_by_name(player_list : list[dict]) -> bool:
             print_data("ERROR: Caracteres incorrectos")    
     return function_return
 
-#search_by_name(lista_jugadores_original)
+#earch_by_name_and_show_achievement(lista_jugadores_original)
 
 ###5
 
@@ -209,3 +209,34 @@ def search_by_name_hall_of_fame_member(player_list : list[dict]) -> bool:
     return function_return
 
 #search_by_name_hall_of_fame_member(lista_jugadores_original)
+
+###7
+
+def calculate_player_w_most_quantity_of_selected_statistic(player_list : list[dict], statistic : str) -> list[dict]:
+    '''Calcula el jugador con la mayor cantidad de la estadistica elegida
+    Param: Una lista de jugadores, un string con el nombre de una estadistica
+    Return: Una lista con el jugador que cumple el requisito'''
+    function_return = "ERROR"
+    new_list = []
+    if len(player_list) != 0:
+        higher_statistic = player_list[0]["estadisticas"][statistic]
+        for index in range(len(player_list)):
+            if player_list[index]["estadisticas"][statistic] > higher_statistic :
+                higher_statistic = player_list[index]["estadisticas"][statistic]
+                higher_player = player_list[index]
+        new_list.append(higher_player)
+        function_return = new_list
+    return function_return                    
+
+
+def show_player_received(player_list : list[dict], statistic : str) -> None:
+    '''Muestra un jugador con su estadistica elegida
+    Para: Un diccionario de un jugador
+    Return: None'''
+    string_format = "\n=============================================\n{0:33}| {1}\n=============================================\n{2:33}| {3}\n=============================================\n"
+    print_data(string_format.format(player_list[0]["nombre"],player_list[0]["posicion"],statistic.replace("_"," ").capitalize(),player_list[0]["estadisticas"][statistic]))
+
+
+diccionario = calculate_player_w_most_quantity_of_selected_statistic(lista_jugadores_original,"rebotes_totales")
+show_player_received(diccionario,"rebotes_totales")
+
