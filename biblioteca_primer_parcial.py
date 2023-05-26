@@ -244,3 +244,8 @@ show_player_received(diccionario,"rebotes_totales")
 
 diccionario = calculate_player_w_most_quantity_of_selected_statistic(lista_jugadores_original,"porcentaje_tiros_de_campo")
 show_player_received(diccionario,"porcentaje_tiros_de_campo")
+
+###9
+
+diccionario = calculate_player_w_most_quantity_of_selected_statistic(lista_jugadores_original,"asistencias_totales")
+show_player_received(diccionario,"asistencias_totales")
