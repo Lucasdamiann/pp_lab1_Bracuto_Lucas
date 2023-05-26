@@ -267,5 +267,8 @@ def show_players_w_more_quantity_of_selected_statistic(players_list : list[dict]
                 string_player += string_format.format(player["nombre"],player["posicion"],statistic.replace("_"," ").capitalize(),player["estadisticas"][statistic])
         print_data(string_player)
 
-show_players_w_more_quantity_of_selected_statistic(lista_jugadores_original ,"promedio_puntos_por_partido")
+#show_players_w_more_quantity_of_selected_statistic(lista_jugadores_original ,"promedio_puntos_por_partido")
 
+###11
+
+show_players_w_more_quantity_of_selected_statistic(lista_jugadores_original ,"promedio_rebotes_por_partido")
